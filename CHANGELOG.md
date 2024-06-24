@@ -13,13 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Electrophoresis BENCHLING/2024/06 schema.
 - Added github enforcement that CHANGELOG.md is updated
 - Added test files Agilent TapeStation Analysis
+- Added requirements for remaining parsers to /docs
 - Add Alphalisa assay support to Gen5 adapter
+- Add fluorescence point detection measurement extension to Spectrophotometry BENCHLING/2023/12 schema
 
 ### Fixed
 
 ### Changed
 
 - Redefine plate well count as optional in AppBio Quantstudio
+- Updated README.md to organize parsers according to maturity level
 
 ### Deprecated
 
