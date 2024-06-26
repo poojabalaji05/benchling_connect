@@ -8,6 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+### Fixed
+
+- Updated schema cleaner to handle utf-8 characters in unit schema urls
+- Updated schema cleaner to handle object schemas with no properties
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Security
+
+## [0.1.35] - 2024-06-24
+
+### Added
 - Add Mabtech Apex adapter
 - Added support for parsing Vi-Cell XR txt files
 - Add Electrophoresis BENCHLING/2024/06 schema.
