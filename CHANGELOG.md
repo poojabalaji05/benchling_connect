@@ -9,9 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added electrophoresis and spectrophotometry parser requirement templates to /docs
+
 ### Fixed
 
+- Make get_model_class_from_schema work with Windows style path
+
 ### Changed
+- Allow no target DNA reference in AppBio Quantstudio design and anlysis
 
 ### Deprecated
 
@@ -22,9 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.37] - 2024-06-26
 
 ### Added
+
 - Add Agilent TapeStation Analysis adapter
 - Added utility to add both dict and dataclass custom information document to an ASM model
 
+- Added Solution Analyzer BENCHLING/2024/03 schema with the extension of the Data System Document.
 ### Fixed
 
 - Updated schema cleaner to handle utf-8 characters in unit schema urls
