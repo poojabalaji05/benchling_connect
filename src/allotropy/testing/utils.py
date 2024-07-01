@@ -43,6 +43,7 @@ NON_UNIQUE_IDENTIFIERS = {
     "data source identifier",
     "device identifier",
     "experimental data identifier",
+    "group identifier",
     "location identifier",
     "measurement method identifier",
     "sample identifier",

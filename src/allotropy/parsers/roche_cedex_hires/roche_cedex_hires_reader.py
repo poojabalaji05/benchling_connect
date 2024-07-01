@@ -4,6 +4,9 @@ import pandas as pd
 
 from allotropy.allotrope.pandas_util import read_csv, read_excel
 from allotropy.named_file_contents import NamedFileContents
+from allotropy.exceptions import AllotropeConversionError
+from allotropy.parsers.roche_cedex_hires import constants
+
 
 
 class RocheCedexHiResReader:
@@ -17,3 +20,6 @@ class RocheCedexHiResReader:
             )
         elif named_file_contents.original_file_name.endswith(".xlsx"):
             return read_excel(named_file_contents.contents.name)
+        else:
+            message = f"{constants.UNSUPPORTED_FILE_FORMAT_ERROR} '{named_file_contents.original_file_name}'"
+            raise AllotropeConversionError(message)

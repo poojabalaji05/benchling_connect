@@ -7,12 +7,11 @@
                     "measurement document": [
                         {
                             "measurement time": "2019-06-18T07:46:47+00:00",
-                            "measurement identifier": "ROCHE_CEDEX_HIRES_TEST_ID_0",
+                            "measurement identifier": "7fa86c0d-a175-4e76-9c9a-5c9e05662fc9",
                             "device control aggregate document": {
                                 "device control document": [
                                     {
                                         "device type": "Cell counter",
-                                        "detection type": "brightfield",
                                         "sample volume setting": {
                                             "value": 300,
                                             "unit": "μL"
@@ -25,7 +24,7 @@
                                 "batch identifier": "TechDev_CD_N-1",
                                 "custom information document": {
                                     "group identifier": "Original",
-                                    "sample draw time": "2019-06-17T08:34:01+00:00"
+                                    "sampling time": "2019-06-17T08:34:01+00:00"
                                 }
                             },
                             "processed data aggregate document": {
@@ -113,12 +112,11 @@
                     "measurement document": [
                         {
                             "measurement time": "2019-06-18T07:51:27+00:00",
-                            "measurement identifier": "ROCHE_CEDEX_HIRES_TEST_ID_1",
+                            "measurement identifier": "5c2f2708-355d-46e6-a087-4946e10761e8",
                             "device control aggregate document": {
                                 "device control document": [
                                     {
                                         "device type": "Cell counter",
-                                        "detection type": "brightfield",
                                         "sample volume setting": {
                                             "value": 300,
                                             "unit": "μL"
@@ -131,7 +129,7 @@
                                 "batch identifier": "TechDev_CD_N-1",
                                 "custom information document": {
                                     "group identifier": "Original",
-                                    "sample draw time": "2019-06-17T08:34:01+00:00"
+                                    "sampling time": "2019-06-17T08:34:01+00:00"
                                 }
                             },
                             "processed data aggregate document": {
@@ -219,12 +217,11 @@
                     "measurement document": [
                         {
                             "measurement time": "2019-06-18T07:56:14+00:00",
-                            "measurement identifier": "ROCHE_CEDEX_HIRES_TEST_ID_2",
+                            "measurement identifier": "8a0d877c-2426-4ae8-b3cc-3ffe13dceedf",
                             "device control aggregate document": {
                                 "device control document": [
                                     {
                                         "device type": "Cell counter",
-                                        "detection type": "brightfield",
                                         "sample volume setting": {
                                             "value": 300,
                                             "unit": "μL"
@@ -237,7 +234,7 @@
                                 "batch identifier": "TechDev_CD_N-1",
                                 "custom information document": {
                                     "group identifier": "Original",
-                                    "sample draw time": "2019-06-17T08:34:01+00:00"
+                                    "sampling time": "2019-06-17T08:34:01+00:00"
                                 }
                             },
                             "processed data aggregate document": {
@@ -325,12 +322,11 @@
                     "measurement document": [
                         {
                             "measurement time": "2019-06-18T08:01:06+00:00",
-                            "measurement identifier": "ROCHE_CEDEX_HIRES_TEST_ID_3",
+                            "measurement identifier": "367d9ced-f334-4a61-9c95-2830184be78e",
                             "device control aggregate document": {
                                 "device control document": [
                                     {
                                         "device type": "Cell counter",
-                                        "detection type": "brightfield",
                                         "sample volume setting": {
                                             "value": 300,
                                             "unit": "μL"
@@ -343,7 +339,7 @@
                                 "batch identifier": "TechDev_CD_N-1",
                                 "custom information document": {
                                     "group identifier": "Original",
-                                    "sample draw time": "2019-06-17T08:34:01+00:00"
+                                    "sampling time": "2019-06-17T08:34:01+00:00"
                                 }
                             },
                             "processed data aggregate document": {
@@ -431,12 +427,11 @@
                     "measurement document": [
                         {
                             "measurement time": "2019-06-18T08:05:45+00:00",
-                            "measurement identifier": "ROCHE_CEDEX_HIRES_TEST_ID_4",
+                            "measurement identifier": "e5f1f12b-9b0b-46f3-a4b2-f7d057264a19",
                             "device control aggregate document": {
                                 "device control document": [
                                     {
                                         "device type": "Cell counter",
-                                        "detection type": "brightfield",
                                         "sample volume setting": {
                                             "value": 300,
                                             "unit": "μL"
@@ -449,7 +444,7 @@
                                 "batch identifier": "TechDev_CD_N-1",
                                 "custom information document": {
                                     "group identifier": "Original",
-                                    "sample draw time": "2019-06-17T08:34:01+00:00"
+                                    "sampling time": "2019-06-17T08:34:01+00:00"
                                 }
                             },
                             "processed data aggregate document": {
@@ -537,12 +532,11 @@
                     "measurement document": [
                         {
                             "measurement time": "2019-06-18T08:10:24+00:00",
-                            "measurement identifier": "ROCHE_CEDEX_HIRES_TEST_ID_5",
+                            "measurement identifier": "7b4b25b0-35ee-4222-aa4d-a135f89b71c7",
                             "device control aggregate document": {
                                 "device control document": [
                                     {
                                         "device type": "Cell counter",
-                                        "detection type": "brightfield",
                                         "sample volume setting": {
                                             "value": 300,
                                             "unit": "μL"
@@ -555,7 +549,7 @@
                                 "batch identifier": "TechDev_CD_N-1",
                                 "custom information document": {
                                     "group identifier": "Original",
-                                    "sample draw time": "2019-06-17T08:34:01+00:00"
+                                    "sampling time": "2019-06-17T08:34:01+00:00"
                                 }
                             },
                             "processed data aggregate document": {
@@ -643,12 +637,11 @@
                     "measurement document": [
                         {
                             "measurement time": "2019-06-18T08:15:15+00:00",
-                            "measurement identifier": "ROCHE_CEDEX_HIRES_TEST_ID_6",
+                            "measurement identifier": "7c2f4eef-ee19-4f1e-9dbc-480a0df2f300",
                             "device control aggregate document": {
                                 "device control document": [
                                     {
                                         "device type": "Cell counter",
-                                        "detection type": "brightfield",
                                         "sample volume setting": {
                                             "value": 300,
                                             "unit": "μL"
@@ -661,7 +654,7 @@
                                 "batch identifier": "TechDev_CD_N-1",
                                 "custom information document": {
                                     "group identifier": "Original",
-                                    "sample draw time": "2019-06-17T08:34:01+00:00"
+                                    "sampling time": "2019-06-17T08:34:01+00:00"
                                 }
                             },
                             "processed data aggregate document": {
@@ -749,12 +742,11 @@
                     "measurement document": [
                         {
                             "measurement time": "2019-06-18T08:20:05+00:00",
-                            "measurement identifier": "ROCHE_CEDEX_HIRES_TEST_ID_7",
+                            "measurement identifier": "86750092-ab74-4e7b-81be-16bf79d50bc2",
                             "device control aggregate document": {
                                 "device control document": [
                                     {
                                         "device type": "Cell counter",
-                                        "detection type": "brightfield",
                                         "sample volume setting": {
                                             "value": 300,
                                             "unit": "μL"
@@ -767,7 +759,7 @@
                                 "batch identifier": "TechDev_CD_N-1",
                                 "custom information document": {
                                     "group identifier": "Original",
-                                    "sample draw time": "2019-06-17T08:34:01+00:00"
+                                    "sampling time": "2019-06-17T08:34:01+00:00"
                                 }
                             },
                             "processed data aggregate document": {
@@ -854,13 +846,12 @@
         "device system document": {
             "asset management identifier": "G037DE019",
             "description": "my system",
-            "brand name": "Cedex",
             "product manufacturer": "Roche",
             "device identifier": "3714019",
-            "model number": "Cedex HiRes"
+            "model number": "Roche Cedex HiRes"
         },
         "data system document": {
-            "file name": "roche_cedex_hires_example_1.csv",
+            "file name": "roche_cedex_hires_example_2.xlsx",
             "software name": "Cedex software",
             "ASM converter name": "allotropy",
             "ASM converter version": "0.1.37"

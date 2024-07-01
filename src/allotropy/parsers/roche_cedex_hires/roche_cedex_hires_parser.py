@@ -43,30 +43,68 @@ from allotropy.parsers.utils.uuids import random_uuid_str
 from allotropy.parsers.vendor_parser import VendorParser
 
 
+def get_property_value(
+    data_frame: pd.DataFrame, column: str, row: int, datatype: Any
+) -> Any:
+    return (
+        datatype(value=value) if (value := get_value(data_frame, column, row)) else None
+    )
+
+
 def get_value(data_frame: pd.DataFrame, column: str, row: int) -> Any | None:
     if column not in data_frame.columns:
         return None
     value = data_frame[column][row]
 
+    if pd.isna(value):
+        return None
     if isinstance(value, np.int64):
         return int(value)
-    elif isinstance(value, np.float64):
+    if isinstance(value, np.float64):
         return float(value)
     return value
 
 
 def get_value_not_none(dataframe: pd.DataFrame, column: str, row: int) -> Any:
     value = get_value(dataframe, column, row)
-    if value is None or value == np.nan:
-        msg = f"Unable to find value for column '{column}'."
+    if value is None:
+        msg = f"{constants.VALUE_ERROR} '{column}'."
         raise AllotropeConversionError(msg)
     return value
+
+
+def get_calculated_data(
+    dataframe: pd.DataFrame, column: str, row: int, datatype: Any
+) -> Any:
+    value = get_value(dataframe, column, row)
+    if value is not None:
+        value = float(Decimal(str(value)) / Decimal("1000000"))
+        return datatype(value=value)
+    return value
+
+
+def get_custom_value(
+    datafram: pd.DataFrame, column: str, row: int, unit: str
+) -> dict | None:
+    value = get_value(datafram, column, row)
+    if value is not None:
+        return {"value": value, "unit": unit}
+    return value
+
+
+def get_system_value(data: pd.DataFrame, column_name: str) -> str:
+    unique_values = set(data[column_name])
+    if len(unique_values) != 1:
+        message = f"{constants.MULTIPLE_SYSTEM_ERROR} '{column_name}'"
+        raise AllotropeConversionError(message)
+    return next(iter(unique_values))
+
 
 
 class RocheCedexHiResParser(VendorParser):
     @property
     def display_name(self) -> str:
-        return "Roche Cedex HiRes"
+        return constants.DISPLAY_NAME
 
     @property
     def release_state(self) -> ReleaseState:
@@ -97,18 +135,11 @@ class RocheCedexHiResParser(VendorParser):
         return DeviceSystemDocument(
             model_number=constants.MODEL_NUMBER,
             product_manufacturer=constants.PRODUCT_MANUFACTURER,
-            asset_management_identifier=self._get_system_value(data, "System name"),
-            description=self._get_system_value(data, "System description"),
-            device_identifier=str(self._get_system_value(data, "Cedex ID")),
+            asset_management_identifier=get_system_value(data, "System name"),
+            description=get_system_value(data, "System description"),
+            device_identifier=str(get_system_value(data, "Cedex ID")),
+            brand_name = constants.BRAND_NAME
         )
-
-    def _get_system_value(self, data: pd.DataFrame, column_name: str):
-        if len(set(data[column_name])) != 1:
-            raise AllotropeConversionError(
-                constants.MULTIPLE_SYSTEM_ERROR + column_name
-            )
-        else:
-            return next(iter(set(data[column_name])))
 
     def _get_cell_counting_document(
         self, data: pd.DataFrame
@@ -123,39 +154,24 @@ class RocheCedexHiResParser(VendorParser):
     ) -> CellCountingDocumentItem:
         sample_custom_document = {
             "group identifier": get_value(data, "Data set name", row),
-            "sampling time": self._get_date_time(
+            "sample draw time": self._get_date_time(
                 str(get_value(data, "Sample draw Time", row))
             ),
         }
         processed_data_custom_document = {
-            "average compactness": {
-                "value": get_value(data, "Avg Compactness", row),
-                "unit": "(unitless)",
-            },
-            "average area": {
-                "value": get_value(data, "Avg Area", row),
-                "unit": "(unitless)",
-            },
-            "average perimeter": {
-                "value": get_value(data, "Avg Perimeter", row),
-                "unit": "μm",
-            },
-            "average segment area": {
-                "value": get_value(data, "Avg Segm. Area", row),
-                "unit": "(unitless)",
-            },
-            "total object count": {
-                "value": get_value(data, "Total Object Count", row),
-                "unit": "cell",
-            },
-            "standard deviation": {
-                "value": get_value(data, "Std Dev.", row),
-                "unit": "cell",
-            },
-            "aggregate rate": {
-                "value": get_value(data, "Aggregate Rate", row),
-                "unit": "%",
-            },
+            "average compactness": get_custom_value(
+                data, "Avg Compactness", row, "(unitless)"
+            ),
+            "average area": get_custom_value(data, "Avg Area", row, "(unitless)"),
+            "average perimeter": get_custom_value(data, "Avg Perimeter", row, "μm"),
+            "average segment area": get_custom_value(
+                data, "Avg Segm. Area", row, "(unitless)"
+            ),
+            "total object count": get_custom_value(
+                data, "Total Object Count", row, "cell"
+            ),
+            "standard deviation": get_custom_value(data, "Std Dev.", row, "cell"),
+            "aggregate rate": get_custom_value(data, "Aggregate Rate", row, "%"),
         }
         return CellCountingDocumentItem(
             analyst=get_value(data, "Username", row),
@@ -181,22 +197,29 @@ class RocheCedexHiResParser(VendorParser):
                             device_control_document=[
                                 DeviceControlDocumentItemModel(
                                     device_type=constants.DEVICE_TYPE,
-                                    sample_volume_setting=TQuantityValueMicroliter(
-                                        value=get_value(data, "Sample volume", row)
+                                    detection_type=constants.DETECTION_TYPE,
+                                    sample_volume_setting=get_property_value(
+                                        data,
+                                        "Sample volume",
+                                        row,
+                                        TQuantityValueMicroliter,
                                     ),
                                 )
                             ]
                         ),
-                        processed_data_aggregate_document=add_custom_information_document(
-                            ProcessedDataAggregateDocument1(
-                                processed_data_document=[
+                        processed_data_aggregate_document=ProcessedDataAggregateDocument1(
+                            processed_data_document=[
+                                add_custom_information_document(
                                     ProcessedDataDocumentItem(
                                         data_processing_document=DataProcessingDocument(
                                             cell_type_processing_method=get_value(
                                                 data, "Cell type name", row
                                             ),
-                                            cell_density_dilution_factor=TQuantityValueUnitless(
-                                                value=get_value(data, "Dilution", row)
+                                            cell_density_dilution_factor=get_property_value(
+                                                data,
+                                                "Dilution",
+                                                row,
+                                                TQuantityValueUnitless,
                                             ),
                                         ),
                                         viability__cell_counter_=TQuantityValuePercent(
@@ -218,54 +241,46 @@ class RocheCedexHiResParser(VendorParser):
                                                 / Decimal("1000000")
                                             )
                                         ),
-                                        total_cell_density__cell_counter_=TQuantityValueMillionCellsPerMilliliter(
-                                            value=float(
-                                                Decimal(
-                                                    str(
-                                                        get_value(
-                                                            data,
-                                                            "Total Cell Conc.",
-                                                            row,
-                                                        )
-                                                    )
-                                                )
-                                                / Decimal("1000000")
-                                            )
+                                        total_cell_density__cell_counter_=get_calculated_data(
+                                            data,
+                                            "Total Cell Conc.",
+                                            row,
+                                            TQuantityValueMillionCellsPerMilliliter,
                                         ),
-                                        dead_cell_density__cell_counter_=TQuantityValueMillionCellsPerMilliliter(
-                                            value=float(
-                                                Decimal(
-                                                    str(
-                                                        get_value(
-                                                            data, "Dead Cell Conc.", row
-                                                        )
-                                                    )
-                                                )
-                                                / Decimal("1000000")
-                                            )
+                                        dead_cell_density__cell_counter_=get_calculated_data(
+                                            data,
+                                            "Dead Cell Conc.",
+                                            row,
+                                            TQuantityValueMillionCellsPerMilliliter,
                                         ),
-                                        total_cell_count=TQuantityValueCell(
-                                            value=get_value(
-                                                data, "Total Cell Count", row
-                                            )
+                                        total_cell_count=get_property_value(
+                                            data,
+                                            "Total Cell Count",
+                                            row,
+                                            TQuantityValueCell,
                                         ),
-                                        viable_cell_count=TQuantityValueCell(
-                                            value=get_value(
-                                                data, "Viable Cell Count", row
-                                            )
+                                        viable_cell_count=get_property_value(
+                                            data,
+                                            "Viable Cell Count",
+                                            row,
+                                            TQuantityValueCell,
                                         ),
-                                        dead_cell_count=TQuantityValueCell(
-                                            value=get_value(
-                                                data, "Dead Cell Count", row
-                                            )
+                                        dead_cell_count=get_property_value(
+                                            data,
+                                            "Dead Cell Count",
+                                            row,
+                                            TQuantityValueCell,
                                         ),
-                                        average_live_cell_diameter__cell_counter_=TQuantityValueMicrometer(
-                                            value=get_value(data, "Avg Diameter", row)
+                                        average_live_cell_diameter__cell_counter_=get_property_value(
+                                            data,
+                                            "Avg Diameter",
+                                            row,
+                                            TQuantityValueMicrometer,
                                         ),
-                                    )
-                                ]
-                            ),
-                            processed_data_custom_document,
+                                    ),
+                                    processed_data_custom_document,
+                                ),
+                            ]
                         ),
                     )
                 ],
