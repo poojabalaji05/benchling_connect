@@ -5,7 +5,7 @@ CEDEX_SOFTWARE = "Cedex software"
 MODEL_NUMBER = "Cedex HiRes"
 BRAND_NAME = "Cedex"
 PRODUCT_MANUFACTURER = "Roche"
-DEVICE_TYPE = "Cell counter"
+DEVICE_TYPE = "cell counter"
 DISPLAY_NAME = "Roche Cedex HiRes"
 DETECTION_TYPE = "brightfield"
 
